@@ -9,7 +9,9 @@
  * The operand functions in Calculator.kt are called by the composables in MainActivity.kt
 
  * @detail
- * <details about what your app does and how it works.  You may want to include>
+ * composable implementation, calling on the Calculator class created in Calculator.kt
+ * Also sets functionality for equals button, clear button, as well as creating a number
+ * pad for the main UI of the app
  *
  * Revision History
  * ----------------
@@ -17,7 +19,13 @@
  *
  *
  * @note:	<Good place to put notes our acknowledge your sources>
+ *     ChatGPT-4 used for composable help and generation
+ *     Gemini used for font and colors (using built in functionality on android studio)
+ *     did not implement much of this hackernoon.com on the app itself, but it helped me learn
+ *     the composable basics
+ *     https://hackernoon.com/the-ultimate-jetpack-compose-cheat-sheet
  */
+
 
 
 
@@ -55,7 +63,7 @@ import kotlin.io.path.Path
 import kotlin.io.path.absolutePathString
 
 //tried to change font to verdana, but it ended up messing the composable formatting
-//behold.....the ruins of my attempt
+//behold.....the ruins of my failed attempt
 //import androidx.compose.ui.text.font.Font
 //import androidx.compose.ui.text.font.FontFamily
 //val verdanaFontFamily = FontFamily(
@@ -87,6 +95,9 @@ fun main() {
 
     // ADD YOUR SOURCE CODE THERE
 }// main()
+
+//ACTUAL CODE STARTS HERE
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -156,7 +167,7 @@ fun CalculatorScreen() {
         //adding row above the "4 banger" buttons. Since there are only 3, it was not easy to add it
         //with the rest of the number pad. See "NumberPad" composable below to see what I mean
         Column {
-            FunctionRow(listOf("√", "ln", "^2"), input) { input = it }
+            FunctionRow(listOf("√", "ln", "^2", "%"), input) { input = it }
             //clear button implementation
             NumberPad(input, onInputChange = { input = it }, onClear = onClear)
             EqualsButton(input) { newResult, newInput ->
@@ -167,7 +178,7 @@ fun CalculatorScreen() {
     }
 }
 
-/*this composable sets a row of function keys defined by FunctionRow:"√", "ln", "^2". */
+/*this composable sets a row of function keys defined by FunctionRow:"√", "ln", "^2", "%". */
 @Composable
 fun FunctionRow(functions: List<String>, input: String, onInputChange: (String) -> Unit) {
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
@@ -247,7 +258,8 @@ fun NumberPad(input: String, onInputChange: (String) -> Unit, onClear: () -> Uni
 
 
 
-//asked ChatGPT to add this preview, but i ended up realizing i never used it because i kept reloading the app
+//asked ChatGPT to add this preview,
+// but i ended up realizing i never used it because i kept reloading the app.....
 @Preview(showBackground = true)
 @Composable
 fun PreviewCalculator() {
